@@ -50,6 +50,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextInput" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextInput"
+        tools:listitem="@layout/item_recyler_view" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
