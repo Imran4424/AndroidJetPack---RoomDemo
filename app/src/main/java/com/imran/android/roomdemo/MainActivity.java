@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
     List<MainData> dataList = new ArrayList<>();
     RoomDB database;
+    private MainRecyclerAdapter mainRecyclerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
 
         // initialize adapter
-        MainRecyclerAdapter mainRecyclerAdapter = new MainRecyclerAdapter(this, dataList);
+        mainRecyclerAdapter = new MainRecyclerAdapter(this, dataList);
         // set adapter
         recyclerView.setAdapter(mainRecyclerAdapter);
 
@@ -71,11 +72,26 @@ public class MainActivity extends AppCompatActivity {
                     editTextInput.setText("");
 
                     // notify when data is inserted
-                    dataList.clear();
-                    dataList.addAll(database.mainDao().getAll());
-                    mainRecyclerAdapter.notifyDataSetChanged();
+                    notifyDataSetHasChanged();
                 }
             }
         });
+
+        resetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // delete all data from database
+                database.mainDao().reset(dataList);
+
+                // notify all data been deleted
+                notifyDataSetHasChanged();
+            }
+        });
+    }
+
+    private void notifyDataSetHasChanged() {
+        dataList.clear();
+        dataList.addAll(database.mainDao().getAll());
+        mainRecyclerAdapter.notifyDataSetChanged();
     }
 }
