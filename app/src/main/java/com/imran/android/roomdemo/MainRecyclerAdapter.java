@@ -17,13 +17,11 @@ import java.util.List;
  */
 public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapter.ViewHolder> {
     private final Context context;
-    private final LayoutInflater layoutInflater;
     private final List<String> dataList;
     private RoomDB databse;
 
     public MainRecyclerAdapter(Context context, List<String> dataList) {
         this.context = context;
-        layoutInflater = LayoutInflater.from(context);
         this.dataList = dataList;
         notifyDataSetChanged();
     }
@@ -31,6 +29,9 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
     @NonNull
     @Override
     public MainRecyclerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context)
+                .inflate(R.layout.item_recyler_view, parent, true);
+
         return null;
     }
 
