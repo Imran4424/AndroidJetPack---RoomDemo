@@ -91,7 +91,7 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
                         // Notify when data is updated
                         dataList.clear();
                         dataList.addAll(databse.mainDao().getAll());
-                        notifyDataSetChanged();
+                        notifyDataSetChanged(); 
                     }
                 });
             }
