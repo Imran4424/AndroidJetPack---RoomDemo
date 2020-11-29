@@ -1,11 +1,10 @@
 package com.imran.android.roomdemo.model;
 
-import androidx.annotation.NonNull;
+import android.content.Context;
+
 import androidx.room.Database;
-import androidx.room.DatabaseConfiguration;
-import androidx.room.InvalidationTracker;
+import androidx.room.Room;
 import androidx.room.RoomDatabase;
-import androidx.sqlite.db.SupportSQLiteOpenHelper;
 
 /**
  * Created by Shah Md Imran Hossain on 29, November, 2020
@@ -13,22 +12,27 @@ import androidx.sqlite.db.SupportSQLiteOpenHelper;
 
 // add database entities
 @Database(entities = {MainData.class}, version = 1, exportSchema = false)
-public class RoomDB extends RoomDatabase {
+public abstract class RoomDB extends RoomDatabase {
+    // create database instance
+    private static RoomDB database;
 
-    @NonNull
-    @Override
-    protected SupportSQLiteOpenHelper createOpenHelper(DatabaseConfiguration config) {
-        return null;
-    }
+    // define database name
+    private static String DATABASE_NAME = "database";
 
-    @NonNull
-    @Override
-    protected InvalidationTracker createInvalidationTracker() {
-        return null;
-    }
+    public synchronized static RoomDB getInstance(Context context) {
+        // Check condition
+        if (database == null) {
+            // when database is null
+            // initialize database
+            database = Room.databaseBuilder(context.getApplicationContext(),
+                    RoomDB.class,
+                    DATABASE_NAME)
+                    .allowMainThreadQueries()
+                    .fallbackToDestructiveMigration()
+                    .build();
+        }
 
-    @Override
-    public void clearAllTables() {
-
+        // Return database
+        return database;
     }
 }
