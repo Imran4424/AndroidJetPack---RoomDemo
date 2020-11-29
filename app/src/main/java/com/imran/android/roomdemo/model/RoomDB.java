@@ -37,5 +37,5 @@ public abstract class RoomDB extends RoomDatabase {
     }
 
     // create Dao
-    public MainDao mainDao();
+    public abstract MainDao mainDao();
 }
