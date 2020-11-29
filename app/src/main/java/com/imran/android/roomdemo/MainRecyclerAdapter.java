@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.imran.android.roomdemo.model.RoomDB;
+
 import java.util.List;
 
 /**
@@ -16,12 +18,14 @@ import java.util.List;
 public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapter.ViewHolder> {
     private final Context context;
     private final LayoutInflater layoutInflater;
-    private final List<String> textList;
+    private final List<String> dataList;
+    private RoomDB databse;
 
-    public MainRecyclerAdapter(Context context, List<String> textList) {
+    public MainRecyclerAdapter(Context context, List<String> dataList) {
         this.context = context;
         layoutInflater = LayoutInflater.from(context);
-        this.textList = textList;
+        this.dataList = dataList;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -37,7 +41,7 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
 
     @Override
     public int getItemCount() {
-        return textList.size();
+        return dataList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
