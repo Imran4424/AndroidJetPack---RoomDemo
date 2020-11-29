@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.imran.android.roomdemo.model.MainData;
+import com.imran.android.roomdemo.model.RoomDB;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
     Button resetButton;
 
     List<MainData> dataList = new ArrayList<>();
+    RoomDB database;
+    MainRecyclerAdapter mainRecyclerAdapter;
     LinearLayoutManager linearLayoutManager;
 
     @Override
