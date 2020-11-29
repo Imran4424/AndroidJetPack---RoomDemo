@@ -24,5 +24,10 @@ public interface MainDao {
     void reset(List<MainData> mainData);
 
     // update query
-    @Query("UPDATE TextList SET text = ")
+    @Query("UPDATE TextList SET text = :sText WHERE ID = :sID")
+    void update(int sID, int sText);
+
+    // get all data query
+    @Query("SELECT * FROM TextList")
+    List<MainData> getAll();
 }
