@@ -2,6 +2,7 @@ package com.imran.android.roomdemo;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -39,7 +40,10 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
         return textList.size();
     }
 
-    public class ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder{
 
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+        }
     }
 }
