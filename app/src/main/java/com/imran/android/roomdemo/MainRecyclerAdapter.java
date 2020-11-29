@@ -105,6 +105,11 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
 
                 // delete text from the database
                 database.mainDao().delete(dataDelete);
+
+                // notify when data is deleted
+                dataList.remove(position);
+                notifyItemRemoved(position);
+                notifyItemRangeChanged(position, dataList.size());
             }
         });
     }
