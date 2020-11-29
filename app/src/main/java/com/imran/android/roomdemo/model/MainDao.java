@@ -25,7 +25,7 @@ public interface MainDao {
 
     // update query
     @Query("UPDATE TextList SET text = :sText WHERE ID = :sID")
-    void update(int sID, int sText);
+    void update(int sID, String sText);
 
     // get all data query
     @Query("SELECT * FROM TextList")

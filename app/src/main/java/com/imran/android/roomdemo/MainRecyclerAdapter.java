@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -67,7 +69,26 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
                 int width = WindowManager.LayoutParams.MATCH_PARENT;
                 int height = WindowManager.LayoutParams.WRAP_CONTENT;
                 dialog.getWindow().setLayout(width, height);
-                
+                dialog.show();
+
+                EditText editText = dialog.findViewById(R.id.updateText);
+                Button buttonUpdate = dialog.findViewById(R.id.buttonUpdate);
+
+                editText.setText(sText);
+
+                buttonUpdate.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // dismiss dialog
+                        dialog.dismiss();
+
+                        // get updated text from edit text
+                        String updatedText = editText.getText().toString().trim();
+
+                        // update text in database
+                        databse.mainDao().update(sID, updatedText);
+                    }
+                });
             }
         });
     }
