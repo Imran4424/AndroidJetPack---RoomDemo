@@ -19,6 +19,10 @@ public interface MainDao {
     @Insert(onConflict = REPLACE)
     void insert(MainData mainData);
 
+    // delete query
+    @Delete
+    void delete(MainData mainData);
+
     // delete all query
     @Delete
     void reset(List<MainData> mainData);

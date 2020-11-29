@@ -25,7 +25,7 @@ import java.util.List;
 public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapter.ViewHolder> {
     private final Context context;
     private final List<MainData> dataList;
-    private RoomDB databse;
+    private RoomDB database;
 
     public MainRecyclerAdapter(Context context, List<MainData> dataList) {
         this.context = context;
@@ -47,7 +47,7 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
         // Initialize main data
         MainData data = dataList.get(position);
         // Initialize database
-        databse = RoomDB.getInstance(context);
+        database = RoomDB.getInstance(context);
         // set text
         holder.textView.setText(data.getText());
 
@@ -86,14 +86,25 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
                         String updatedText = editText.getText().toString().trim();
 
                         // update text in database
-                        databse.mainDao().update(sID, updatedText);
+                        database.mainDao().update(sID, updatedText);
 
                         // Notify when data is updated
                         dataList.clear();
-                        dataList.addAll(databse.mainDao().getAll());
-                        notifyDataSetChanged(); 
+                        dataList.addAll(database.mainDao().getAll());
+                        notifyDataSetChanged();
                     }
                 });
+            }
+        });
+
+        holder.deleteButtonImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Initialize main data
+                MainData dataDelete = dataList.get(holder.getAdapterPosition());
+
+                // delete text from the database
+                database.mainDao().delete(dataDelete);
             }
         });
     }
