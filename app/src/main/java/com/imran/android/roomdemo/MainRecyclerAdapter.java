@@ -1,5 +1,6 @@
 package com.imran.android.roomdemo;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.imran.android.roomdemo.model.MainData;
 import com.imran.android.roomdemo.model.RoomDB;
 
 import java.util.List;
@@ -19,10 +21,10 @@ import java.util.List;
  */
 public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapter.ViewHolder> {
     private final Context context;
-    private final List<String> dataList;
+    private final List<MainData> dataList;
     private RoomDB databse;
 
-    public MainRecyclerAdapter(Context context, List<String> dataList) {
+    public MainRecyclerAdapter(Context context, List<MainData> dataList) {
         this.context = context;
         this.dataList = dataList;
         notifyDataSetChanged();
@@ -39,7 +41,30 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
 
     @Override
     public void onBindViewHolder(@NonNull MainRecyclerAdapter.ViewHolder holder, int position) {
+        // Initialize main data
+        MainData data = dataList.get(position);
+        // Initialize database
+        databse = RoomDB.getInstance(context);
+        // set text
+        holder.textView.setText(data.getText());
 
+        holder.editButtonImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // initialize main data
+                MainData dataEdit = dataList.get(holder.getAdapterPosition());
+                // get id
+                int sID = dataEdit.getID();
+
+                // get text
+                String sText = dataEdit.getText();
+
+                // create dialog
+                Dialog dialog = new Dialog(context);
+                // set content view
+                dialog.setContentView(R.layout.dialog_update);
+            }
+        });
     }
 
     @Override
@@ -54,7 +79,9 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            textView = itemView.findViewById(R.id.)
+            textView = itemView.findViewById(R.id.textView);
+            editButtonImage = itemView.findViewById(R.id.editImage);
+            deleteButtonImage = textView.findViewById(R.id.deleteImage);
         }
     }
 }
