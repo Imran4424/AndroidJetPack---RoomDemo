@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -22,8 +23,6 @@ public class MainActivity extends AppCompatActivity {
 
     List<MainData> dataList = new ArrayList<>();
     RoomDB database;
-    MainRecyclerAdapter mainRecyclerAdapter;
-    LinearLayoutManager linearLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,13 +40,42 @@ public class MainActivity extends AppCompatActivity {
         dataList = database.mainDao().getAll();
 
         // initialize linear layout manager
-        linearLayoutManager = new LinearLayoutManager(this);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         // set layout manager
         recyclerView.setLayoutManager(linearLayoutManager);
 
         // initialize adapter
-        mainRecyclerAdapter = new MainRecyclerAdapter(this, dataList);
+        MainRecyclerAdapter mainRecyclerAdapter = new MainRecyclerAdapter(this, dataList);
         // set adapter
         recyclerView.setAdapter(mainRecyclerAdapter);
+
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // get string from edit text
+                String sText = editTextInput.getText().toString().trim();
+
+                // check condition
+                if (!sText.isEmpty()) {
+                    // when text is not empty
+                    // Initialize the main data
+                    MainData data = new MainData();
+
+                    // set text on main data
+                    data.setText(sText);
+
+                    // insert text in database
+                    database.mainDao().insert(data);
+
+                    // clear edit text
+                    editTextInput.setText("");
+
+                    // notify when data is inserted
+                    dataList.clear();
+                    dataList.addAll(database.mainDao().getAll());
+                    mainRecyclerAdapter.notifyDataSetChanged();
+                }
+            }
+        });
     }
 }
