@@ -87,6 +87,11 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
 
                         // update text in database
                         databse.mainDao().update(sID, updatedText);
+
+                        // Notify when data is updated
+                        dataList.clear();
+                        dataList.addAll(databse.mainDao().getAll());
+                        notifyDataSetChanged();
                     }
                 });
             }
