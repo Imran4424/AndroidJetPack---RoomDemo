@@ -20,5 +20,20 @@ public class MainData implements Serializable {
     @ColumnInfo(name = "text")
     private String text;
 
+    // Generate getter and setter
+    public int getID() {
+        return ID;
+    }
 
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
 }
