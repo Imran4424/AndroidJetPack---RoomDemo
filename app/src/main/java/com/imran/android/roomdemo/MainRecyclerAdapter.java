@@ -29,10 +29,10 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
     @NonNull
     @Override
     public MainRecyclerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context)
+        View itemView = LayoutInflater.from(context)
                 .inflate(R.layout.item_recyler_view, parent, true);
 
-        return null;
+        return new ViewHolder(itemView);
     }
 
     @Override
