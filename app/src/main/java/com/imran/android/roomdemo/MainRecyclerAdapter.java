@@ -109,7 +109,7 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
                 // notify when data is deleted
                 dataList.remove(position);
                 notifyItemRemoved(position);
-                notifyItemRangeChanged(position, dataList.size());
+                notifyItemRangeChanged(position, dataList.size()); 
             }
         });
     }
