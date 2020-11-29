@@ -16,6 +16,7 @@ public class MainData implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private int ID;
 
+    // create text column
     @ColumnInfo(name = "text")
     private String text;
 
