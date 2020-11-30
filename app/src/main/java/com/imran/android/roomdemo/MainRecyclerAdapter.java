@@ -126,9 +126,9 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            textView = itemView.findViewById(R.id.textView);
-            editButtonImage = itemView.findViewById(R.id.editImage);
-            deleteButtonImage = textView.findViewById(R.id.deleteImage);
+            textView = itemView.findViewById(R.id.cellTextView);
+            editButtonImage = itemView.findViewById(R.id.cellEditImage);
+            deleteButtonImage = textView.findViewById(R.id.cellDeleteImage);
         }
     }
 }

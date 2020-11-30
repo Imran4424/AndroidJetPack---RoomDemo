@@ -18,7 +18,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/cellTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -26,14 +26,14 @@
                 android:textSize="30sp" />
 
             <ImageView
-                android:id="@+id/editImage"
+                android:id="@+id/cellEditImage"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="8dp"
                 app:srcCompat="@drawable/edit_24" />
 
             <ImageView
-                android:id="@+id/deleteImage"
+                android:id="@+id/cellDeleteImage"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="8dp"
