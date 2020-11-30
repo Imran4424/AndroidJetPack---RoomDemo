@@ -25,11 +25,14 @@ import java.util.List;
 public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapter.ViewHolder> {
     private final Context context;
     private final List<MainData> dataList;
-    private RoomDB database;
+    private final RoomDB database;
 
     public MainRecyclerAdapter(Context context, List<MainData> dataList) {
         this.context = context;
         this.dataList = dataList;
+        // Initialize database
+        database = RoomDB.getInstance(context);
+
         notifyDataSetChanged();
     }
 
@@ -46,62 +49,17 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
     public void onBindViewHolder(@NonNull MainRecyclerAdapter.ViewHolder holder, int position) {
         // Initialize main data
         MainData data = dataList.get(position);
-        // Initialize database
-        database = RoomDB.getInstance(context);
+
         // set text
         holder.textView.setText(data.getText());
-
-        holder.editButtonImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // initialize main data
-                MainData dataEdit = dataList.get(holder.getAdapterPosition());
-                // get id
-                int sID = dataEdit.getID();
-
-                // get text
-                String sText = dataEdit.getText();
-
-                // create dialog
-                Dialog dialog = new Dialog(context);
-                // set content view
-                dialog.setContentView(R.layout.dialog_update);
-                int width = WindowManager.LayoutParams.MATCH_PARENT;
-                int height = WindowManager.LayoutParams.WRAP_CONTENT;
-                dialog.getWindow().setLayout(width, height);
-                dialog.show();
-
-                EditText editText = dialog.findViewById(R.id.updateText);
-                Button buttonUpdate = dialog.findViewById(R.id.buttonUpdate);
-
-                editText.setText(sText);
-
-                buttonUpdate.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        // dismiss dialog
-                        dialog.dismiss();
-
-                        // get updated text from edit text
-                        String updatedText = editText.getText().toString().trim();
-
-                        // update text in database
-                        database.mainDao().update(sID, updatedText);
-
-                        // Notify when data is updated
-                        dataList.clear();
-                        dataList.addAll(database.mainDao().getAll());
-                        notifyDataSetChanged();
-                    }
-                });
-            }
-        });
+        // set position
+        holder.position = position;
 
         holder.deleteButtonImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Initialize main data
-                MainData dataDelete = dataList.get(holder.getAdapterPosition());
+                MainData dataDelete = dataList.get(position);
 
                 // delete text from the database
                 database.mainDao().delete(dataDelete);
@@ -120,15 +78,62 @@ public class MainRecyclerAdapter extends RecyclerView.Adapter<MainRecyclerAdapte
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        TextView textView;
-        ImageView editButtonImage;
-        ImageView deleteButtonImage;
+        public final TextView textView;
+        public  final ImageView editButtonImage;
+        public final ImageView deleteButtonImage;
+        public int position;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             textView = itemView.findViewById(R.id.cellTextView);
             editButtonImage = itemView.findViewById(R.id.cellEditImage);
-            deleteButtonImage = textView.findViewById(R.id.cellDeleteImage);
+            deleteButtonImage = itemView.findViewById(R.id.cellDeleteImage);
+
+                editButtonImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // initialize main data
+                    MainData dataEdit = dataList.get(position);
+                    // get id
+                    int sID = dataEdit.getID();
+
+                    // get text
+                    String sText = dataEdit.getText();
+
+                    // create dialog
+                    Dialog dialog = new Dialog(context);
+                    // set content view
+                    dialog.setContentView(R.layout.dialog_update);
+                    int width = WindowManager.LayoutParams.MATCH_PARENT;
+                    int height = WindowManager.LayoutParams.WRAP_CONTENT;
+                    dialog.getWindow().setLayout(width, height);
+                    dialog.show();
+
+                    EditText editText = dialog.findViewById(R.id.updateText);
+                    Button buttonUpdate = dialog.findViewById(R.id.buttonUpdate);
+
+                    editText.setText(sText);
+
+                    buttonUpdate.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // dismiss dialog
+                            dialog.dismiss();
+
+                            // get updated text from edit text
+                            String updatedText = editText.getText().toString().trim();
+
+                            // update text in database
+                            database.mainDao().update(sID, updatedText);
+
+                            // Notify when data is updated
+                            dataList.clear();
+                            dataList.addAll(database.mainDao().getAll());
+                            notifyDataSetChanged();
+                        }
+                    });
+                }
+            });
         }
     }
 }
